@@ -162,13 +162,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="shellcode_x64.asm">
+    <None Include="shellcode_x64.asm">
       <DeploymentContent>true</DeploymentContent>
       <FileType>Document</FileType>
-    </MASM>
-    <MASM Include="shellcode_x86.asm">
+    </None>
+    <None Include="shellcode_x64.hex" />
+    <None Include="shellcode_x86.asm">
       <FileType>Document</FileType>
-    </MASM>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

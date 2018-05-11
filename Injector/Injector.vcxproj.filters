@@ -46,11 +46,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="shellcode_x64.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
-    <MASM Include="shellcode_x86.asm">
-      <Filter>Source Files</Filter>
-    </MASM>
+    <None Include="shellcode_x64.asm">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shellcode_x86.asm">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shellcode_x64.hex">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
