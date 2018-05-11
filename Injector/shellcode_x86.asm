@@ -1,10 +1,16 @@
-sub         rsp,28h
-lea         rcx,[RIP+(38h-1Bh)]
-call        qword ptr[RIP-(21h-0)]
+sub         esp,28h
+call 	    $ + 5
+pop 	    ebx
+add 	    ebx, 1 + 1 + 1 + 1
+lea         ecx,[ebx+(40h-23h)]
+call 	    $ + 5
+pop 	    ebx
+add 	    ebx, 1 + 1 + 1 + 1
+call        dword[ebx-(25h)]
 xor         ecx, ecx
 or          edx, 0FFFFFFFFh
-test        rax, rax
+test        eax, eax
 cmove       ecx, edx
 mov         eax, ecx
-add         rsp, 28h
+add         esp, 28h
 ret
