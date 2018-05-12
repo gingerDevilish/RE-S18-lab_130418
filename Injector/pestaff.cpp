@@ -137,6 +137,7 @@ bool FindExport(REMOTE_ARGS_DEFS, const PVOID context)
 	char* p_local_dll_name = nullptr;
 	DWORD* p_local_names = nullptr;
 	DWORD* p_local_addrs = nullptr;
+	WORD* p_local_ordinals = nullptr;
 
 	for (;;)
 	{
@@ -156,9 +157,12 @@ bool FindExport(REMOTE_ARGS_DEFS, const PVOID context)
 			RVA_TO_REMOTE_VA(DWORD*, p_local_image_export_descriptor->AddressOfNames);
 		const auto p_remote_addrs =
 			RVA_TO_REMOTE_VA(DWORD*, p_local_image_export_descriptor->AddressOfFunctions);
+		const auto p_remote_ordinals =
+			RVA_TO_REMOTE_VA(WORD*, p_local_image_export_descriptor->AddressOfNameOrdinals);
 
 		p_local_names = REMOTE_ARRAY_FIXED(DWORD, p_remote_names, p_local_image_export_descriptor->NumberOfNames);
 		p_local_addrs = REMOTE_ARRAY_FIXED(DWORD, p_remote_addrs, p_local_image_export_descriptor->NumberOfFunctions);
+		p_local_ordinals = REMOTE_ARRAY_FIXED(WORD, p_remote_ordinals, p_local_image_export_descriptor->NumberOfNames);
 
 		if (p_local_image_export_descriptor->NumberOfNames != p_local_image_export_descriptor->NumberOfFunctions)
 		{
@@ -172,12 +176,16 @@ bool FindExport(REMOTE_ARGS_DEFS, const PVOID context)
 			const auto p_remote_string = RVA_TO_REMOTE_VA(char*, p_local_names[i]);
 			const auto p_local_string = REMOTE_ARRAY_ZEROENDED_NOLEN(char, p_remote_string);
 
-			//printf("Function: %s at %p \n", pLocalString, pLocalAddrs[i]);
+			int j = p_local_ordinals[i];
+			printf("Function: %s ordinal %d at %p \n", p_local_string, j, p_local_addrs[j]);
+			if (i % 100 == 0) {
+				printf("===");
+			}
 
 			if (0 == strcmp(export_context->function_name, p_local_string))
 			{
 				b_found = true; //stop iterating, we found it
-				export_context->remote_function_address = p_remote_image_base + p_local_addrs[i];
+				export_context->remote_function_address = p_remote_image_base + p_local_addrs[j];
 				free(p_local_string);
 				break;
 			}
