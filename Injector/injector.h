@@ -13,4 +13,4 @@ bool InjectDll(const HANDLE hProcess, const LPCTSTR lpFileName, const PVOID pfnL
 ULONG_PTR GetEnryPoint(REMOTE_ARGS_DEFS);
 ULONG_PTR GetRemoteLoadLibraryA(REMOTE_ARGS_DEFS);
 bool FindEntryPoint(REMOTE_ARGS_DEFS, const PVOID context);
-ULONG_PTR FindEntryPoint2(REMOTE_ARGS_DEFS);
+ULONG_PTR FindEntryPoint(REMOTE_ARGS_DEFS);
